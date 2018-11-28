@@ -1,0 +1,145 @@
+{% extends 'core/base.html' %}
+
+{% block contenido %}
+
+
+
+{% load crispy_forms_tags %}  
+
+
+
+<form action="" method="POST" enctype="multipart/form-data">
+
+    {% csrf_token %}
+    
+    <table class="tablaformulario">
+        <tr>
+            <th>
+                <label for="txtNombre">Nombre</label>
+            </th>
+            <th>
+                <input type="text" id="txtNombre" name="txtNombre" class=".form-control">
+            </th>
+        </tr> 
+        <tr>
+            <th><label for="cboEsterilizado">Esterilizado</label></th>
+            <th><select name="cboEsterilizado" id="cboEsterilizado">
+                <option value="">Seleccionar</option>
+                <option value="1">Si</option>
+                <option value="2">No</option>
+            </th>
+        </tr>
+        <tr>
+            <th><label for="cboChip">Chip</label></th>
+            <th><select name="cboChip" id="cboChip">
+                <option value="">Seleccionar</option>
+                <option value="1">Si</option>
+                <option value="2">No</option>
+            </th>
+        </tr> 
+        
+            <th><label for="txtNacimiento">Fecha de Nacimiento</label></th>
+            <th><input type="date" id="txtNacimiento" name="txtNacimiento"></th>
+        </tr>
+        <tr>
+            <th><label for="cboRaza">Raza</label></th>
+            <th><select name="cboRaza" id="cboRaza">
+                <option value="">Seleccionar</option>
+                    {% for r in raza  %}
+                    <option value="{{r.id}}">{{r.descripcion}}</option>
+                    {% endfor %}
+        </tr>
+
+
+        <tr>
+            <th><label for="cboOrigen">Origen de mascota</label></th>
+            <th><select name="cboOrigen" id="cboOrigen">
+                <option value="">Seleccionar</option>
+                    {% for o in origen  %}
+                    <option value="{{o.id}}">{{o.descripcion}}</option>
+                    {% endfor %}
+        </tr>
+        <tr>
+            <th><label for="cboRefugio">Refugio</label></th>
+            <th><select name="cboRefugio" id="cboRefugio">
+                <option value="">Seleccionar</option>
+                    {% for r in refugio  %}
+                    <option value="{{r.id}}">{{r.nombre}}</option>
+                    {% endfor %}
+        </tr>
+        <tr>
+            <th><label for="txtRut">Rut usuario</label></th>
+            <th><input type="text" placeholder="ej: 12345678-9" id="txtRut" name="txtRut"></th>
+        </tr>
+
+        <tr>
+            <th><label for="txtImagen">Imagen</label></th>
+            <th><input type="file" id="txtImagen" name="txtImagen"></th>
+        </tr>
+
+        <tr>
+            <th>
+            </th>
+            <th>
+                <br>
+                <input type="submit" value="Registro" id="btnGuardar">
+            </th>
+
+        </tr>
+    </table>
+    <br>   
+</form>
+
+
+<table class="resultadoMascota">
+    <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Esterilizado</th>
+        <th>Chip</th>
+        <th>Rut de Usuario</th>
+        <th>Opciones</th>
+    </tr>
+    {# por cada fila de la BBDD creamos una fila de la tabla #}
+     {% for m in masc %}
+
+    <tr>
+        <td>{{ m.id }}</td>
+        <td>{{ m.nombre }}</td>
+        
+        {% if m.esterilizado == "1" %}
+            <td>Esterilizado</td>
+        {% else %}
+            <td>No esterilizado</td>
+        {% endif %}
+        {% if  m.chip == "1" %}
+            <td>Si</td>
+        {% else %}
+            <td>No</td>
+        {% endif %}
+        <td>{{ m.rut_usuario }}</td>
+        <td>
+                <a href="{% url 'eliminar' m.id %}">Eliminar</a>
+                <a href="{% url 'modificarMascota' m.id %}">Modificar</a>                
+        </td>
+    </tr>
+
+    {% endfor %}
+
+
+</table>
+
+<!--Primero preguntamos si hay mensajes que mostrar-->
+
+{% if messages %}
+<!--recorremos todos los mensajes y los mostramos-->
+    {% for m in messages %}
+        <div>{{ m }}</div>
+    {% endfor %}
+{% endif %}
+
+
+
+
+
+{% endblock %}

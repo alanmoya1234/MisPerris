@@ -1,0 +1,111 @@
+{% extends 'core/base.html' %}
+
+{% block contenido %}
+{% load static %}
+<form action="" id="formularioSocio" method="POST">
+
+
+    {% csrf_token %}
+    <table class="tablaformulario">
+        <tr>
+            <th><label for="txtRun">Run</label></th>
+            <th><input type="text" placeholder="ej: 12345678-9" id="txtRun" name="txtRun"></th>
+        </tr>
+        <tr>
+            <th>
+                <label for="txtNombre">Nombre</label>
+            </th>
+            <th>
+                <input type="text" id="txtNombre" name="txtNombre">
+            </th>
+        </tr> 
+        <tr>
+            <th>
+                <label for="txtApPat">Apellido Paterno</label>
+            </th>
+            <th>
+                <input type="text" id="txtApPat" name="txtApPat">
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <label for="txtApMat">Apellido Materno</label>
+            </th>
+            <th>
+                <input type="text" id="txtApMat" name="txtApMat">
+            </th>
+        </tr> 
+        <tr>
+                <th><label for="cboGenero">Genero</label></th>
+                <th><select name="cboGenero" id="cboGenero">
+                    <option value="">Seleccionar</option>
+                    <option value="1">Masculino</option>
+                    <option value="2">Femenino</option>
+                </th>
+            </tr>
+        <tr>
+            <th><label for="txtNacimiento">Fecha de Nacimiento</label></th>
+            <th><input type="date" id="txtNacimiento" name="txtNacimiento"></th>
+        </tr>
+        <tr>
+            <th><label for="txtfono">Teléfono</label></th>
+            <th><input type="number" placeholder="ej: 87654321" id="txtfono" name="txtfono"></th>
+        </tr>
+        <tr>
+            <th><label for="cboRegion">Región</label></th>
+            <th><select name="cboRegion" id="cboRegion">
+                <option value="">Seleccionar</option>
+                    {% for r in region  %}
+                    <option value="{{r.id}}">{{r.descripcion}}</option>
+                    {% endfor %}
+            </th>
+        </tr>
+        <tr>
+            <th><label for="cboCuidad">Ciudad</label></th>
+            <th><select name="cboCuidad" id="cboCuidad" disabled="true">
+                <option value="">Seleccionar</option>
+                    {% for c in ciudad  %}
+                    <option value="{{c.id}}">{{c.descripcionComuna}}</option>
+                    {% endfor %}
+            </th>
+        </tr>
+        <tr>
+            <th><label for="txtDireccion">Dirección</label></th>
+            <th><input type="text" id="txtDireccion" name="txtDireccion" disabled="true"></th>
+        </tr>
+        <tr>
+            <th><label for="txtMail">Correo electrónico</label></th>
+            <th><input type="text" placeholder="ej: usuario@gmail.com" id="txtMail" name="txtMail"></th>
+        </tr>
+        <tr>
+            <th><label for="cboTipoVivienda">Tipo de Vivienda</label></th>
+            <th><select name="cboTipoVivienda" id="cboTipoVivienda">
+                <option value="">Seleccionar</option>
+                {% for v in vivienda  %}
+                <option value="{{v.id}}">{{v.descripcionVivienda}}</option>
+                {% endfor %}
+            </th>
+        </tr>
+        <tr>
+            <th><label for="cboUser">Tipo de Usuario</label></th>
+            <th><select name="cboUser" id="cboUser">
+                <option value="">Seleccionar</option>
+                {% for u in usuario  %}
+                <option value="{{u.id}}">{{u.descripcionUsuario}}</option>
+                {% endfor %}
+            </th>
+        </tr>
+        <tr>
+            <th>
+            </th>
+            <th>
+                <br>
+                <input type="submit" value="Registro" id="btnGuardar">
+            </th>
+        </tr>
+    </table>
+    <br>
+    <h3>{{ mensaje }}</h3>
+</form>
+
+{% endblock contenido %}

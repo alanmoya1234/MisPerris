@@ -1,0 +1,6 @@
+
+<!--html necesario para escribir los option-->
+<option value="">Seleccionar</option>
+{% for c in ciudad  %}
+    <option value="{{c.id}}">{{c.descripcionComuna}}</option>
+{% endfor %}

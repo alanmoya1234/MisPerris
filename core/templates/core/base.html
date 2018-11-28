@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--cargamos el plugin pwa-->
+{% load pwa %}
+<head>
+    <!--Instalamos el serviceworker-->
+    {% progressive_web_app_meta %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MisPerris</title>
+    {% load static %} <!--Cual era la extension para que esto este en colores???????-->
+    <link rel="icon" href="{% static 'core/img/icoMisPerris.png' %}"><!--Para que tenga icono-->
+    <!--cargar plugin // seguir instrucciones de https://bxslider.com/ -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
+    <!--fancy box https://fancyapps.com/fancybox/3/-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
+    <script src="{% static 'core/Js/capturarFecha.js' %}"></script>
+
+
+
+    <script src="{% static 'core/js/inicializacion.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'core/css/estilos.css' %}">
+
+    <!--llamado a codigo respectivo del formulario-->
+    <!--llamado a los js que controlan las validaciones-->
+    <script src="{% static 'core/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'core/js/validacion.js' %}"></script> 
+    <script src="{% static 'core/js/comboComuna.js' %}"></script>
+    <script src="{% static 'core/js/txtdireccion.js' %}"></script>
+
+
+
+
+
+</head>
+<body>
+    <header>
+        
+        <img class="logo" src="{% static 'core/img/logo.png' %}" alt="logo">
+        
+        <ul>            
+            <li><a href="{%url 'home' %}">inicio</a></li>
+            <li><a href="#">quienes somos</a></li>
+            <li><a href="#">servicios</a></li>
+            <li><a href="#">contáctanos</a></li>
+            
+            {% if request.user.is_authenticated %}
+            <li><a href="{% url 'registroMascotas' %}">Registrar Mascotas</a></li>
+            <li>
+                <a href="">Hi, {{ request.user.first_name }}</a>
+            </li>
+            <li><a href="{% url 'logout' %}">Cerrar sesion</a></li>
+
+            {% else %}
+            <li><a href="{%url 'registro' %}">hazte socio</a></li>
+           
+            <li>
+                <a href="{% url 'login' %}">Login</a>
+            </li>
+            <li>
+                <a href="{% url 'register' %}">Registro</a>
+            </li>
+
+            {% endif %}
+        </ul>
+    </header>
+    <div class="landing" enctype="multipart/form-data">
+        <br>
+        <div class="slider">
+            <div>
+                <img title="❝ Bienvenido amigo, me adoptarías ❞" class="imgLanding" src="{% static 'core/img/adoptados/perro.png' %}" alt="perro">
+            </div>
+            <div>
+                <img title="❝ Apolo, llego a cambiarme la vida, es mi compañero incondicional de viajes ❞" class="imgLanding" src="{% static 'core/img/adoptados/Apolo.jpg' %}" alt="perro">
+            </div>
+            <div>
+                <img title="❝ Duque,ha sido una bendición desde que perdi la visión, él me cuida como lazarillo ❞" class="imgLanding" src="{% static 'core/img/adoptados/Duque.jpg' %}" alt="perro">
+            </div>
+            <div>
+                <img title="❝ Estamos felices de tener a Tom en casa. Es un super fiel compañero❞" class="imgLanding" src="{% static 'core/img/adoptados/Tom.jpg' %}" alt="perro">
+            </div>
+            <!--perros adoptados-->
+            {% for m in maLan %}
+                {% if m.imagen %}
+                    {% if m.rut_usuario %}
+                    <div>
+                        <img title="❝:D❞" class="imgLanding" src="{{ m.imagen.url }}" alt="perro adoptado">
+                    </div>
+                    {% else %}
+
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+        
+
+        <h3 class="letraBlanca flotaIzq">+  56 9 98765431</h3>
+        <h4 class="letraBlanca eslogan">Rescate y adopción de perros callejeros</h4>
+        <ul class="social">
+            <li><a href="https://www.facebook.com/" target="_blank"><img src="{% static 'core/img/socialfacebook.png' %}" alt="facebook"></a></li>
+            <li><a href="https://plus.google.com/discover"><img src="{% static 'core/img/socialplus.png' %}" alt="google"></a></li>
+            <li><a href="https://www.instagram.com/?hl=es-la"><img src="{% static 'core/img/social-inst.png' %}" alt="instagram"></a></li>
+            <li><a href="#"><img src="{% static 'core/img/Social-mail.png' %}" alt="mail"></a></li>
+        </ul>
+    </div>
+    <br>
+    <br>
+    <div class="contenido"><!-- inicio contenido -->
+
+        {% block contenido %}
+        {% endblock contenido %}
+
+
+    </div><!-- fin contenido -->
+    <br>
+    <br>
+    <br>
+    <br>
+    <!-- galeria -->        
+    <div class="galeria">
+        <ul>
+            <li>
+                <a data-fancybox="gallery" title="Bigotes, alegre y juguetón" href="{% static 'core/img/rescatados/Bigotes.jpg' %}"><img src="{% static 'core/img/rescatados/Bigotes.jpg' %}"></a>
+            </li>
+            <li>
+                <a data-fancybox="gallery" title="Chocolate, alegre y juguetón" href="{% static 'core/img/rescatados/Chocolate.jpg' %}"><img src="{% static 'core/img/rescatados/Chocolate.jpg' %}"></a>
+            </li>
+            <li>
+                <a data-fancybox="gallery" title="Luna, alegre y juguetón" href="{% static 'core/img/rescatados/Luna.jpg' %}"><img src="{% static 'core/img/rescatados/Luna.jpg' %}"></a>
+            </li>
+            <li>
+                <a data-fancybox="gallery" title="Maya, alegre y juguetón" href="{% static 'core/img/rescatados/Maya.jpg' %}"><img src="{% static 'core/img/rescatados/Maya.jpg' %}"></a>
+            </li>
+            <li>
+                <a data-fancybox="gallery" title="Oso, alegre y juguetón" href="{% static 'core/img/rescatados/Oso.jpg' %}"><img src="{% static 'core/img/rescatados/Oso.jpg' %}"></a>
+            </li>
+            <li>
+                <a data-fancybox="gallery" title="Pexel, alegre y juguetón" href="{% static 'core/img/rescatados/Pexel.jpg' %}"><img src="{% static 'core/img/rescatados/Pexel.jpg' %}"></a>
+            </li>
+            <li>
+                <a data-fancybox="gallery" title="Wifi, alegre y juguetón" href="{% static 'core/img/rescatados/Wifi.jpg' %}"><img src="{% static 'core/img/rescatados/Wifi.jpg' %}"></a>
+            </li>
+
+            <!--perros Rescatados-->
+            {% for m in maLan %}
+                {% if m.imagen %}
+                    {% if m.rut_usuario %}
+                    
+                    {% else %}
+                    <li>
+                        <a data-fancybox="gallery" title=":D" href="{{ m.imagen.url }}"><img src="{{ m.imagen.url }}"></a>
+                    </li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    <footer>
+        <h5 class="letraGrisOscuro">Desarrollo Web y Mobile</h5>
+    </footer>
+</body>
+</html>

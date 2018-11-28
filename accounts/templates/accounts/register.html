@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Registro usuario</title>
+    {% load static %} <!--Cual era la extension para que esto este en colores???????--> 
+    <style>
+            .credenciales{
+                margin-left: 8%;
+                display: inline-block;
+                
+                
+            }
+    </style>
+    <style>
+            form input, form textarea{
+                display: block;   
+            }
+    </style>
+    <style>
+            body {
+                position: relative;
+                z-index: 1;
+                background: #FFFFFF;
+                max-width: 480px;
+                margin: 0 auto 100px;
+                padding: 45px;
+                box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+              }
+    </style>
+    <style>
+            .btningresar{
+                width: 200px;
+                margin-left: 25%;
+                text-decoration: none;
+                padding: 10px;
+                font-weight: 600;
+                font-size: 20px;
+                color: #ffffff;
+                background-color: #27d69c;
+                border-radius: 6px;
+                border: 2px solid #04d427;
+            }
+            h2{
+                margin-left: 25%;
+                color: #FFFFFF;
+            }
+    </style>
+
+
+</head>
+<body style="background-color:  rgb(133,212,183);" >
+
+    <form action="" method="POST" class="credenciales">
+        <h2>Registrar Usuario</h2>
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <input type="submit" value="Registrar" class="btningresar">
+
+    </form>
+
+    {{ mensaje }}
+    
+
+</body>
+
+
+</html>
